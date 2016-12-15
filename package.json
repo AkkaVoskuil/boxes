@@ -1,0 +1,41 @@
+{
+  "name": "fantastic-box-co",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf ./dist/*",
+    "prebuild": "npm run clean",
+    "build:css": "node-sass --include-path ./node_modules --output-style compressed ./src/scss/application.scss ./dist/css/application.css && postcss --use autoprefixer -b 'last 2 versions' ./dist/css/application.css -r true",
+    "build:js": "copyfiles -u 2 ./src/js/* ./src/js/*/* ./src/js/*/*/* ./node_modules/angular/angular.min.js ./node_modules/angular-route/angular-route.min.js ./dist/js",
+    "build:html": "copyfiles -u 1 ./src/index.html ./dist",
+    "build:favicon": "copyfiles -u 1 ./src/favicon.ico ./dist",
+    "build": "npm run build:css && npm run build:js && npm run build:html && npm build:favicon",
+    "watch:css": "watch 'npm run build:css' ./src/scss/",
+    "watch:js": "watch 'npm run build:js' ./src/js/",
+    "watch:html": "watch 'npm run build:html' ./src/",
+    "watch": "parallelshell \"npm run watch:css -s\" \"npm run watch:js -s\" \"npm run watch:html -s\"",
+    "open:dev": "opener http:127.0.0.1:9090",
+    "serve": "http-server -p 9090 ./dist/",
+    "dev": "npm run clean && npm run build:favicon && parallelshell \"npm run watch\" \"npm run serve\" \"npm run open:dev -s\"",
+    "test": "todo..."
+  },
+  "author": "TEMPLworks Information Technology Solutions SA",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.0.3",
+    "copyfiles": "^0.2.1",
+    "http-server": "^0.8.5",
+    "node-sass": "^3.4.1",
+    "normalize-sass": "^1.0.0",
+    "opener": "^1.4.1",
+    "parallelshell": "^2.0.0",
+    "postcss-cli": "^2.3.1",
+    "rimraf": "^2.4.3",
+    "watch": "^0.16.0"
+  },
+  "dependencies": {
+    "angular": "^1.6.0",
+    "angular-route": "^1.6.0"
+  }
+}
